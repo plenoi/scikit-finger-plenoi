@@ -24,7 +24,7 @@ from sklearn.base import (
 #from sklearn.utils._param_validation import 
 from tqdm import tqdm
 
-from skfp.utils import run_in_parallel
+#from skfp.utils import run_in_parallel
 
 """
 If you get MaybeEncodingError, first check any worker functions for exceptions!
@@ -147,20 +147,13 @@ class BaseFingerprintTransformer(
         if copy:
             X = deepcopy(X)
 
-        n_jobs = effective_n_jobs(self.n_jobs)
+        n_jobs = 1
         if n_jobs == 1:
             if self.verbose:
                 results = [self._calculate_fingerprint([mol]) for mol in tqdm(X)]
             else:
                 results = self._calculate_fingerprint(X)
-        else:
-            results = run_in_parallel(
-                self._calculate_fingerprint,
-                data=X,
-                n_jobs=n_jobs,
-                batch_size=self.batch_size,
-                verbose=self.verbose,
-            )
+
 
         if isinstance(results, (np.ndarray, csr_array)):
             return results
