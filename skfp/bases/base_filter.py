@@ -150,7 +150,7 @@ class BaseFilter(ABC, BaseEstimator, TransformerMixin):
         mols = deepcopy(mols) if copy else mols
         mols = ensure_mols(mols)
 
-        n_jobs = effective_n_jobs(self.n_jobs)
+        n_jobs = 1
         if n_jobs == 1:
             if self.verbose:
                 filter_indicators = [
@@ -158,15 +158,6 @@ class BaseFilter(ABC, BaseEstimator, TransformerMixin):
                 ]
             else:
                 filter_indicators = self._filter_mols_batch(mols)
-        else:
-            filter_indicators = run_in_parallel(
-                self._filter_mols_batch,
-                data=mols,
-                n_jobs=n_jobs,
-                batch_size=self.batch_size,
-                flatten_results=True,
-                verbose=self.verbose,
-            )
 
         return filter_indicators
 
