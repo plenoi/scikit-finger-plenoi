@@ -8,7 +8,7 @@ import numpy as np
 from joblib import effective_n_jobs
 from rdkit.Chem import Mol
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.utils._param_validation import InvalidParameterError
+#from sklearn.utils._param_validation import InvalidParameterError
 from tqdm import tqdm
 
 from skfp.utils import ensure_mols, run_in_parallel
@@ -16,15 +16,6 @@ from skfp.utils import ensure_mols, run_in_parallel
 
 class BaseFilter(ABC, BaseEstimator, TransformerMixin):
     """Base class for molecular filters."""
-
-    # parameters common for all filters
-    _parameter_constraints: dict = {
-        "allow_one_violation": ["boolean"],
-        "return_indicators": ["boolean"],
-        "n_jobs": [Integral, None],
-        "batch_size": [Integral, None],
-        "verbose": ["verbose", dict],
-    }
 
     def __init__(
         self,
@@ -187,9 +178,3 @@ class BaseFilter(ABC, BaseEstimator, TransformerMixin):
     def _apply_mol_filter(self, mol: Mol) -> bool:
         pass
 
-    def _validate_params(self) -> None:
-        # override Scikit-learn validation to make stacktrace nicer
-        try:
-            super()._validate_params()
-        except InvalidParameterError as e:
-            raise InvalidParameterError(str(e)) from None
