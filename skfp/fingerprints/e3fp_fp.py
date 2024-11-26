@@ -169,8 +169,6 @@ class E3FPFingerprint(BaseFingerprintTransformer):
         self.radius_multiplier = radius_multiplier
         self.rdkit_invariants = rdkit_invariants
 
-    def _validate_params(self) -> None:
-        super()._validate_params()
 
     def transform(
         self, X: Sequence[Union[str, Mol]], copy: bool = False
