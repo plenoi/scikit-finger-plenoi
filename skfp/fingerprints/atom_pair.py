@@ -6,7 +6,7 @@ from typing import Optional, Union
 import numpy as np
 from rdkit.Chem import Mol, MolToSmiles
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import Interval, InvalidParameterError
+#from sklearn.utils._param_validation import Interval, InvalidParameterError
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import ensure_mols, require_mols_with_conf_ids
@@ -147,17 +147,7 @@ class AtomPairFingerprint(BaseFingerprintTransformer):
            [0, 0, 0, ..., 0, 0, 0]], dtype=uint8)
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "fp_size": [Interval(Integral, 1, None, closed="left")],
-        "min_distance": [Interval(Integral, 1, None, closed="left")],
-        "max_distance": [Interval(Integral, 1, None, closed="left")],
-        "include_chirality": ["boolean"],
-        "use_pharmacophoric_invariants": ["boolean"],
-        "use_3D": ["boolean"],
-        "count_simulation": ["boolean"],
-        "scale_by_hac": ["boolean", Interval(Integral, 0, None, closed="left")],
-    }
+
 
     def __init__(
         self,
@@ -193,14 +183,6 @@ class AtomPairFingerprint(BaseFingerprintTransformer):
         self.count_simulation = count_simulation
         self.scale_by_hac = scale_by_hac
 
-    def _validate_params(self) -> None:
-        super()._validate_params()
-        if self.max_distance < self.min_distance:
-            raise InvalidParameterError(
-                f"The max_distance parameter of {self.__class__.__name__} must be "
-                f"greater or equal to min_distance, got: "
-                f"min_distance={self.min_distance}, max_distance={self.max_distance}"
-            )
 
     def transform(
         self, X: Sequence[Union[str, Mol]], copy: bool = False
