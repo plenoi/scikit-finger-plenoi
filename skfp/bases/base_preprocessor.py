@@ -5,7 +5,7 @@ from typing import Optional, Union
 
 from joblib import effective_n_jobs
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.utils._param_validation import InvalidParameterError
+#from sklearn.utils._param_validation import InvalidParameterError
 from tqdm import tqdm
 
 from skfp.utils import run_in_parallel
@@ -106,10 +106,3 @@ class BasePreprocessor(ABC, BaseEstimator, TransformerMixin):
 
     def _transform_batch(self, X):
         raise NotImplementedError
-
-    def _validate_params(self) -> None:
-        # override Scikit-learn validation to make stacktrace nicer
-        try:
-            super()._validate_params()
-        except InvalidParameterError as e:
-            raise InvalidParameterError(str(e)) from None
