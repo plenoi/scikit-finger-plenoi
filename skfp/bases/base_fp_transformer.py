@@ -18,7 +18,7 @@ from rdkit.DataStructs import (
 from scipy.sparse import csr_array, dok_array
 from sklearn.base import (
     BaseEstimator,
-    ClassNamePrefixFeaturesOutMixin,
+    #ClassNamePrefixFeaturesOutMixin,
     TransformerMixin,
 )
 #from sklearn.utils._param_validation import 
@@ -41,7 +41,7 @@ cannot be pickled, throwing TypeError: cannot pickle 'Boost.Python.function' obj
 
 
 class BaseFingerprintTransformer(
-    ABC, BaseEstimator, TransformerMixin, ClassNamePrefixFeaturesOutMixin
+    ABC, BaseEstimator, TransformerMixin, 
 ):
     """Base class for fingerprint transformers."""
 
@@ -73,7 +73,7 @@ class BaseFingerprintTransformer(
         self.verbose = verbose
         self.random_state = random_state
 
-        # this, combined with ClassNamePrefixFeaturesOutMixin, automatically handles
+        # this, combined with , automatically handles
         # set_output() API
         self._n_features_out = n_features_out
         self.n_features_out = self._n_features_out
