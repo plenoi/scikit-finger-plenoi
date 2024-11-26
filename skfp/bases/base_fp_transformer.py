@@ -21,7 +21,7 @@ from sklearn.base import (
     ClassNamePrefixFeaturesOutMixin,
     TransformerMixin,
 )
-from sklearn.utils._param_validation import InvalidParameterError
+#from sklearn.utils._param_validation import 
 from tqdm import tqdm
 
 from skfp.utils import run_in_parallel
@@ -113,7 +113,6 @@ class BaseFingerprintTransformer(
         --------
         self
         """
-        self._validate_params()
         return self
 
     def fit_transform(
@@ -143,7 +142,7 @@ class BaseFingerprintTransformer(
     def transform(
         self, X: Sequence[Union[str, Mol]], copy: bool = False
     ) -> Union[np.ndarray, csr_array]:
-        self._validate_params()
+
 
         if copy:
             X = deepcopy(X)
@@ -179,13 +178,6 @@ class BaseFingerprintTransformer(
         :return: array containing calculated fingerprints for each molecule
         """
         raise NotImplementedError
-
-    def _validate_params(self) -> None:
-        # override Scikit-learn validation to make stacktrace nicer
-        try:
-            super()._validate_params()
-        except InvalidParameterError as e:
-            raise InvalidParameterError(str(e)) from None
 
     @staticmethod
     def _hash_fingerprint_bits(
