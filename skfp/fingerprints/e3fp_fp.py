@@ -9,7 +9,7 @@ import scipy.sparse
 from rdkit import RDLogger
 from rdkit.Chem import Mol, MolToSmiles
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import Interval, InvalidParameterError
+
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import require_mols_with_conf_ids
@@ -138,14 +138,6 @@ class E3FPFingerprint(BaseFingerprintTransformer):
            [0, 0, 0, ..., 0, 0, 0]], dtype=uint8)
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "fp_size": [Interval(Integral, 1, None, closed="left")],
-        "n_bits_before_folding": [Interval(Integral, 1, None, closed="left")],
-        "level": [None, Interval(Integral, 1, None, closed="left")],
-        "radius_multiplier": [Interval(Real, 1.0, None, closed="neither")],
-        "rdkit_invariants": ["boolean"],
-    }
 
     def __init__(
         self,
@@ -179,12 +171,6 @@ class E3FPFingerprint(BaseFingerprintTransformer):
 
     def _validate_params(self) -> None:
         super()._validate_params()
-        if self.n_bits_before_folding < self.fp_size:
-            raise InvalidParameterError(
-                f"n_bits_before_folding must be greater of equal to fp_size, got:"
-                f"n_bits_before_folding={self.n_bits_before_folding}, "
-                f"fp_size={self.fp_size}"
-            )
 
     def transform(
         self, X: Sequence[Union[str, Mol]], copy: bool = False
