@@ -8,19 +8,11 @@ from sklearn.base import BaseEstimator, TransformerMixin
 #from sklearn.utils._param_validation import InvalidParameterError
 from tqdm import tqdm
 
-from skfp.utils import run_in_parallel
+#from skfp.utils import run_in_parallel
 
 
 class BasePreprocessor(ABC, BaseEstimator, TransformerMixin):
     """Base class for molecule preprocessing classes."""
-
-    # parameters common for all fingerprints
-    _parameter_constraints: dict = {
-        "n_jobs": [Integral, None],
-        "batch_size": [Integral, None],
-        "suppress_warnings": ["boolean"],
-        "verbose": ["verbose", dict],
-    }
 
     def __init__(
         self,
@@ -86,21 +78,13 @@ class BasePreprocessor(ABC, BaseEstimator, TransformerMixin):
         if copy:
             X = deepcopy(X)
 
-        n_jobs = effective_n_jobs(self.n_jobs)
+        n_jobs = 1
         if n_jobs == 1:
             if self.verbose:
                 results = [self._transform_batch([mol]) for mol in tqdm(X)]
             else:
                 results = self._transform_batch(X)
-        else:
-            results = run_in_parallel(
-                self._transform_batch,
-                data=X,
-                n_jobs=n_jobs,
-                batch_size=self.batch_size,
-                flatten_results=True,
-                verbose=self.verbose,
-            )
+
 
         return results
 
