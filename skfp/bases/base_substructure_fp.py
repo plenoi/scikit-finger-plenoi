@@ -4,7 +4,7 @@ from typing import Optional, Union
 import numpy as np
 from rdkit.Chem import Mol, MolFromSmarts
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import InvalidParameterError
+#from sklearn.utils._param_validation import InvalidParameterError
 
 from skfp.bases.base_fp_transformer import BaseFingerprintTransformer
 from skfp.utils import ensure_mols
@@ -57,10 +57,6 @@ class BaseSubstructureFingerprint(BaseFingerprintTransformer):
         This fingerprint uses only 2D molecular graphs and does not require conformers.
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "patterns": [list],
-    }
 
     def __init__(
         self,
@@ -99,10 +95,7 @@ class BaseSubstructureFingerprint(BaseFingerprintTransformer):
         compiled_patterns = []
         for pattern in patterns:
             pattern_mol = MolFromSmarts(pattern)
-            if not pattern_mol:
-                raise InvalidParameterError(f"Got invalid SMARTS pattern: '{pattern}'")
-            else:
-                compiled_patterns.append(pattern_mol)
+            compiled_patterns.append(pattern_mol)
 
         return compiled_patterns
 
