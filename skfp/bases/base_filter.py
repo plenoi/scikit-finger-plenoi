@@ -11,7 +11,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 #from sklearn.utils._param_validation import InvalidParameterError
 from tqdm import tqdm
 
-from skfp.utils import ensure_mols, run_in_parallel
+from skfp.utils import ensure_mols
 
 
 class BaseFilter(ABC, BaseEstimator, TransformerMixin):
