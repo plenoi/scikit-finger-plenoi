@@ -8,7 +8,7 @@ from numpy.linalg import norm
 from rdkit.Chem import Mol
 from scipy.sparse import csr_array
 from scipy.stats import moment
-from sklearn.utils._param_validation import Interval, StrOptions
+#from sklearn.utils._param_validation import Interval, StrOptions
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import require_mols_with_conf_ids
@@ -118,15 +118,6 @@ class ElectroShapeFingerprint(BaseFingerprintTransformer):
     array([[ 4.84903774,  5.10822298, ...        ,  5.14008906,  2.75483277 ]])
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "partial_charge_model": [
-            StrOptions({"Gasteiger", "MMFF94", "formal", "precomputed"})
-        ],
-        "charge_scaling_factor": [Interval(Real, 0.0, None, closed="neither")],
-        "charge_errors": [StrOptions({"raise", "ignore", "zero"})],
-        "errors": [StrOptions({"raise", "NaN", "ignore"})],
-    }
 
     def __init__(
         self,
