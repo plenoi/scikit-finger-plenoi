@@ -4,7 +4,7 @@ from typing import Optional, Union
 import numpy as np
 from rdkit.Chem import Mol
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import StrOptions
+#from sklearn.utils._param_validation import StrOptions
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import ensure_mols
@@ -93,10 +93,6 @@ class EStateFingerprint(BaseFingerprintTransformer):
 
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "variant": [StrOptions({"bit", "count", "sum"})],
-    }
 
     def __init__(
         self,
