@@ -5,7 +5,7 @@ from typing import Optional, Union
 import numpy as np
 from rdkit.Chem import Mol
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import Interval, InvalidParameterError
+
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import ensure_mols
@@ -128,16 +128,6 @@ class RDKitFingerprint(BaseFingerprintTransformer):
            [0, 0, 0, ..., 0, 0, 0]], dtype=uint8)
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "fp_size": [Interval(Integral, 1, None, closed="left")],
-        "min_path": [Interval(Integral, 1, None, closed="left")],
-        "max_path": [Interval(Integral, 1, None, closed="left")],
-        "use_bond_order": ["boolean"],
-        "num_bits_per_feature": [Interval(Integral, 1, None, closed="left")],
-        "linear_paths_only": ["boolean"],
-        "count_simulation": ["boolean"],
-    }
 
     def __init__(
         self,
@@ -174,12 +164,7 @@ class RDKitFingerprint(BaseFingerprintTransformer):
 
     def _validate_params(self) -> None:
         super()._validate_params()
-        if self.max_path < self.min_path:
-            raise InvalidParameterError(
-                f"The max_path parameter of {self.__class__.__name__} must be "
-                f"greater or equal to min_path, got: "
-                f"min_path={self.min_path}, max_path={self.max_path}"
-            )
+
 
     def _calculate_fingerprint(
         self, X: Sequence[Union[str, Mol]]
