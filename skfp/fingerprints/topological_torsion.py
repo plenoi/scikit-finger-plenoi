@@ -5,7 +5,7 @@ from typing import Optional, Union
 import numpy as np
 from rdkit.Chem import Mol
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import Interval
+
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import ensure_mols
@@ -111,14 +111,6 @@ class TopologicalTorsionFingerprint(BaseFingerprintTransformer):
 
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "fp_size": [Interval(Integral, 1, None, closed="left")],
-        "torsion_atom_count": [Interval(Integral, 2, None, closed="left")],
-        "use_pharmacophoric_invariants": ["boolean"],
-        "include_chirality": ["boolean"],
-        "count_simulation": ["boolean"],
-    }
 
     def __init__(
         self,
