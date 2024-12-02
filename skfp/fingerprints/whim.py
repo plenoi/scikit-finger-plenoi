@@ -5,7 +5,7 @@ from typing import Optional, Union
 import numpy as np
 from rdkit.Chem import Mol
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import Interval
+
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import require_mols_with_conf_ids
@@ -118,10 +118,6 @@ class WHIMFingerprint(BaseFingerprintTransformer):
            [1.196, 0.507, 0.242, ..., 2.183, 3.285, 3.129]])
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "clip_val": [None, Interval(Real, 0, None, closed="left")],
-    }
 
     def __init__(
         self,
