@@ -5,7 +5,7 @@ from typing import Optional, Union
 import numpy as np
 from rdkit.Chem import Mol
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import Interval
+
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import ensure_mols, ensure_smiles, no_rdkit_logs
@@ -92,11 +92,7 @@ class RDKit2DDescriptorsFingerprint(BaseFingerprintTransformer):
            [ 1.00000000e+00,  2.18749619e+00,  ...  0.00000000e+00,  3.55007619e-01]], dtype=float32)
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "normalized": ["boolean"],
-        "clip_val": [None, Interval(Real, 0, None, closed="left")],
-    }
+
 
     def __init__(
         self,
