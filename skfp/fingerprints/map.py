@@ -11,7 +11,7 @@ from datasketch import MinHash
 from rdkit.Chem import Mol, MolToSmiles, PathToSubmol
 from rdkit.Chem.rdmolops import FindAtomEnvironmentOfRadiusN, GetDistanceMatrix
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import Interval, StrOptions
+#from sklearn.utils._param_validation import Interval, StrOptions
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import ensure_mols
@@ -111,12 +111,7 @@ class MAPFingerprint(BaseFingerprintTransformer):
            [0, 0, 0, ..., 0, 0, 0]], dtype=uint8)
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "fp_size": [Interval(Integral, 1, None, closed="left")],
-        "radius": [Interval(Integral, 0, None, closed="left")],
-        "variant": [StrOptions({"bit", "count", "raw_hashes"})],
-    }
+
 
     def __init__(
         self,
