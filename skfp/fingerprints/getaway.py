@@ -5,7 +5,7 @@ from typing import Optional, Union
 import numpy as np
 from rdkit.Chem import Mol
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import Interval
+
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import require_mols_with_conf_ids
@@ -122,10 +122,7 @@ class GETAWAYFingerprint(BaseFingerprintTransformer):
            [ 4.755,  1.   ,  2.502, ..., -1.   , -0.   ,  2.467]])
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "clip_val": [None, Interval(Real, 0, None, closed="left")],
-    }
+
 
     def __init__(
         self,
