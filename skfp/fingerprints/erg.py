@@ -5,7 +5,7 @@ from typing import Optional, Union
 import numpy as np
 from rdkit.Chem import Mol
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import Interval, InvalidParameterError, StrOptions
+#from sklearn.utils._param_validation import Interval, InvalidParameterError, StrOptions
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import ensure_mols
@@ -138,13 +138,6 @@ class ERGFingerprint(BaseFingerprintTransformer):
            [0., 0., 0., ..., 0., 0., 0.]])
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "fuzz_increment": [Interval(Real, 0.0, None, closed="left")],
-        "min_path": [Interval(Integral, 1, None, closed="left")],
-        "max_path": [Interval(Integral, 1, None, closed="left")],
-        "variant": [StrOptions({"fuzzy", "bit", "count"})],
-    }
 
     def __init__(
         self,
@@ -171,12 +164,6 @@ class ERGFingerprint(BaseFingerprintTransformer):
 
     def _validate_params(self) -> None:
         super()._validate_params()
-        if self.max_path <= self.min_path:
-            raise InvalidParameterError(
-                f"The max_path parameter of {self.__class__.__name__} must be "
-                f"greater than min_path, got: "
-                f"min_path={self.min_path}, max_path={self.max_path}"
-            )
 
     def _calculate_fingerprint(
         self, X: Sequence[Union[str, Mol]]
