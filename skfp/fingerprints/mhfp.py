@@ -144,7 +144,6 @@ class MHFPFingerprint(BaseFingerprintTransformer):
 
     def _validate_params(self) -> None:
         super()._validate_params()
-        if self.radius < self.min_radius:
 
     def _calculate_fingerprint(
         self, X: Sequence[Union[str, Mol]]
