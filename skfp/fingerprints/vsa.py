@@ -4,7 +4,7 @@ from typing import Optional, Union
 import numpy as np
 from rdkit.Chem import Mol
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import StrOptions
+
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import ensure_mols
@@ -116,12 +116,6 @@ class VSAFingerprint(BaseFingerprintTransformer):
            [ 5.73366748,  6.54475641,  0.        ,  ...,  0.        ,  0.        , 0.        ]])
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "variant": [
-            StrOptions({"all", "all_original", "SlogP", "SMR", "PEOE", "EState"})
-        ],
-    }
 
     def __init__(
         self,
