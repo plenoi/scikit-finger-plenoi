@@ -5,7 +5,7 @@ from typing import Optional, Union
 import numpy as np
 from rdkit.Chem import Mol
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import Interval, InvalidParameterError, StrOptions
+#from sklearn.utils._param_validation import Interval, InvalidParameterError, StrOptions
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils.validators import ensure_smiles
@@ -113,17 +113,6 @@ class MHFPFingerprint(BaseFingerprintTransformer):
            [0, 0, 1, ..., 1, 0, 1]], dtype=uint8)
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "fp_size": [Interval(Integral, 1, None, closed="left")],
-        "radius": [Interval(Integral, 0, None, closed="left")],
-        "min_radius": [Interval(Integral, 0, None, closed="left")],
-        "rings": ["boolean"],
-        "isomeric": ["boolean"],
-        "kekulize": ["boolean"],
-        "variant": [StrOptions({"bit", "count", "raw_hashes"})],
-    }
-
     def __init__(
         self,
         fp_size: int = 2048,
@@ -156,11 +145,6 @@ class MHFPFingerprint(BaseFingerprintTransformer):
     def _validate_params(self) -> None:
         super()._validate_params()
         if self.radius < self.min_radius:
-            raise InvalidParameterError(
-                f"The radius parameter of {self.__class__.__name__} must be "
-                f"greater or equal to min_radius, got: "
-                f"min_radius={self.min_radius}, radius={self.radius}"
-            )
 
     def _calculate_fingerprint(
         self, X: Sequence[Union[str, Mol]]
