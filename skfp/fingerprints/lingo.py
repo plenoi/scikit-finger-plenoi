@@ -8,7 +8,7 @@ from typing import Optional, Union
 import numpy as np
 from rdkit.Chem import Mol
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import Interval
+#from sklearn.utils._param_validation import Interval
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import ensure_smiles
@@ -81,12 +81,6 @@ class LingoFingerprint(BaseFingerprintTransformer):
            [0, 1, 0, ..., 0, 0, 0]], dtype=uint8)
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "fp_size": [Interval(Integral, 1, None, closed="left")],
-        "substring_length": [Interval(Integral, 1, None, closed="left")],
-        "count": ["boolean"],
-    }
 
     def __init__(
         self,
