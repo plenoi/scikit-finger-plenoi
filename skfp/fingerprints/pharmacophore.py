@@ -5,7 +5,7 @@ from typing import Optional, Union
 import numpy as np
 from rdkit.Chem import Mol
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import Interval, InvalidParameterError, StrOptions
+#from sklearn.utils._param_validation import Interval, InvalidParameterError, StrOptions
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import ensure_mols, require_mols_with_conf_ids
@@ -121,14 +121,6 @@ class PharmacophoreFingerprint(BaseFingerprintTransformer):
 
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "variant": [StrOptions({"raw_bits", "folded"})],
-        "min_points": [Interval(Integral, 2, 3, closed="both")],
-        "max_points": [Interval(Integral, 2, 3, closed="both")],
-        "fp_size": [Interval(Integral, 1, None, closed="left")],
-        "use_3D": ["boolean"],
-    }
 
     def __init__(
         self,
@@ -163,12 +155,7 @@ class PharmacophoreFingerprint(BaseFingerprintTransformer):
 
     def _validate_params(self) -> None:
         super()._validate_params()
-        if self.max_points < self.min_points:
-            raise InvalidParameterError(
-                f"The max_points parameter of {self.__class__.__name__} must be "
-                f"greater or equal to min_points, got: "
-                f"min_points={self.min_points}, max_points={self.max_points}"
-            )
+
 
     def _get_n_features_out(
         self, variant: str, min_points: int, max_points: int, fp_size: int
