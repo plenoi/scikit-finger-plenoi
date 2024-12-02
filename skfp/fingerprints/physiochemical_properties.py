@@ -5,7 +5,7 @@ from typing import Optional, Union
 import numpy as np
 from rdkit.Chem import Mol
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import Interval, StrOptions
+#from sklearn.utils._param_validation import Interval, StrOptions
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import ensure_mols
@@ -91,11 +91,7 @@ class PhysiochemicalPropertiesFingerprint(BaseFingerprintTransformer):
            [0, 0, 0, ..., 0, 0, 0]], dtype=uint8)
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "fp_size": [Interval(Integral, 1, None, closed="left")],
-        "variant": [StrOptions({"BP", "BT"})],
-    }
+
 
     def __init__(
         self,
