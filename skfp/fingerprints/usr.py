@@ -5,7 +5,7 @@ from typing import Optional, Union
 import numpy as np
 from rdkit.Chem import Mol
 from scipy.sparse import csr_array
-from sklearn.utils._param_validation import StrOptions
+
 
 from skfp.bases import BaseFingerprintTransformer
 from skfp.utils import require_mols_with_conf_ids
@@ -102,10 +102,7 @@ class USRFingerprint(BaseFingerprintTransformer):
     array([[ 1.33723405,  0.39526642, ...        ,  0.94315243, -0.78539494]])
     """
 
-    _parameter_constraints: dict = {
-        **BaseFingerprintTransformer._parameter_constraints,
-        "errors": [StrOptions({"raise", "NaN", "ignore"})],
-    }
+
 
     def __init__(
         self,
